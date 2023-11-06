@@ -1,5 +1,7 @@
 #include <iostream>
-#include <cstdlib>
+#include <algorithm>
+#include <random> // Include the random header
+#include <ctime>  // Include the ctime header for seeding the random number generator
 
 // Function to swap two integers in an array
 void swap(int& a, int& b) {
@@ -85,8 +87,14 @@ int main() {
     }
     std::cout << std::endl;
 
-    // Shuffle the array
-    std::random_shuffle(arr, arr + size);
+    // Seed the random number generator
+    std::srand(std::time(0));
+
+    // Shuffle the array using the Fisher-Yates shuffle
+    for (int i = size - 1; i > 0; i--) {
+        int j = std::rand() % (i + 1);
+        swap(arr[i], arr[j]);
+    }
 
     // Sort the shuffled array using randomized partition quicksort
     randomizedQuickSort(arr, 0, size - 1);
